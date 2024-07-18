@@ -4,7 +4,7 @@
  * Description:       Animations for your blocks.
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           0.2.0
+ * Version:           0.6.0
  * Author:            Matthew Ediger
  * Author URI:        https:wonderjarcreative.com
  * License:           GPL-2.0-or-later
@@ -23,52 +23,22 @@ if ( ! defined( 'ABSPATH' ) ) {
  * 
  * As this is a block filter plugin, there isn't a php class. Set requried paramaters
  * as constants.
+ * 
+ * @since 0.5.0 Dropped plugin from version constant.
  */
 define( 'WONDER_ANIMATIONS_PLUGIN_NAME', 'wonder-animations' );
-define( 'WONDER_ANIMATIONS_PLUGIN_VERSION', '0.2.0' );
+define( 'WONDER_ANIMATIONS_VERSION', '0.6.0' );
 
 /**
- * Include the block filter.
+ * Kickoff main class.
  * 
- * This sets the rest of the plugin into motion.
+ * Kickoff the main plugin class.
+ * 
+ * @since 0.5.0
  */
-function wonder_animations_enqueue_assets() {
-    wp_enqueue_script(
-        WONDER_ANIMATIONS_PLUGIN_NAME,
-        plugin_dir_url( __FILE__ ) . 'build/index.js',
-        array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor', 'lodash' ),
-        WONDER_ANIMATIONS_PLUGIN_VERSION
-    );
-    wp_add_inline_script(
-        WONDER_ANIMATIONS_PLUGIN_NAME,
-        'const wonderAnimations = ' . json_encode( wonder_animations_get_animations() ), 'before'
-    );
+function wonder_animations_kickoff_main_class() {
+    require_once plugin_dir_path( __FILE__ ) . 'includes/class-wonder-animations.php';
+    $class = new Wonder_Animations();
+    $class->init();
 }
-add_action( 'enqueue_block_editor_assets', 'wonder_animations_enqueue_assets', 99 );
-
-/**
- * Get animations.
- * 
- * Utility function to get the animations.
- * 
- * @since 0.3.0
- * 
- * @return array The animations.
- */
-function wonder_animations_get_animations() {
-    $return     = array();
-    $types      = array( 'fade-in', 'slide-in' );
-    $directions = array( 'top', 'right', 'bottom', 'left' );
-
-    foreach ( $types as $type ) {
-        foreach ( $directions as $direction ) {
-            $slug          = $type . '-' . $direction;
-            $return[] = array(
-                'slug'  => $slug,
-                'label' => ucwords( str_replace( '-', ' ', $slug ) )
-            );
-        }
-    }
-    
-    return $return;
-}
+add_action( 'init', 'wonder_animations_kickoff_main_class' );
