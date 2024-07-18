@@ -53,6 +53,10 @@ class Wonder_Animations_Public {
 	 * Enqueue scripts.
 	 * 
 	 * Add the scripts we need on the frontend.
+	 * 
+	 * @see   animate.style for npm controlled aniate.css.
+	 * @since 
+	 * @since 0.11.0 Using external animate.css stylesheet.
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/css/wonder-animations.css', array(), $this->version );
@@ -63,6 +67,9 @@ class Wonder_Animations_Public {
 	 * Render block.
 	 * 
 	 * Render our blocks with animations.
+	 * 
+	 * @since 0.12.0 Changed preg_replaces for str_replaces.
+	 * @since 0.9.0  Checking for boolean true for reset_view.
 	 * 
 	 * @param  string   $block_content Content of the block. 
 	 * @param  array    $block         The full block.
@@ -76,44 +83,23 @@ class Wonder_Animations_Public {
 
 		// Set the element classes.
 		$classes = array(
-			'wa-element',
-			isset( $block['attrs']['repeat_animation'] ) ? 'wa-repeat' : ''
+			'animate__animated',
+			'animate__' . $block['attrs']['animation_name'], // Name.
+			! empty( $block['attrs']['animation_delay'] ) ? 'animate__' . $block['attrs']['animation_delay'] : '', // Delay.
+			! empty( $block['attrs']['animation_duration'] ) ? 'animate__' . $block['attrs']['animation_duration'] : '', // Duration.
+			! empty( $block['attrs']['animation_repeat'] ) ? 'animate__' . $block['attrs']['animation_repeat'] : '', // Repeat.
+			! empty( $block['attrs']['reset_view'] ) && true === $block['attrs']['reset_view'] ? 'reset-view' : '' // Reset view.
 		);
-		$classes = implode( ' ', $classes );
-		
-		// Set the style attributes.
-		$atts  = array(
-			'animation-name'      => $block['attrs']['animation_name'],
-			'animation-duration'  => isset( $block['attrs']['animation_duration'] ) ? $block['attrs']['animation_duration'] . 'ms' : '400ms',
-			'animation-play-state' => 'paused'
-		);
+		$classes = str_replace( "  ", " ", implode( ' ', $classes ) );
 
-		if ( isset( $block['attrs']['animation_delay'] ) ) {
-			$atts['animation-delay'] = $block['attrs']['animation_delay'] . 'ms';
-		}
-		
-		if ( isset( $block['attrs']['animation_iteration_count'] ) ) {
-			$atts['animation-iteration-count'] = $block['attrs']['animation_iteration_count'];
-		}
-		
-		$att_string = '';
-		foreach ( $atts as $declaration => $value ) {
-			$att_string .= $declaration . ':' . $value . ';';
-		}
-
-		/**
-		 * Doing this in two separate preg_replaces for now.
-		 * 
-		 * Could not determine how to place the class and the style at once.
-		 */
-		$block_content  = preg_replace( "/(<.+ class=\".+)(\".+)/", "$1 {$classes}$2" , $block_content );
-		
-		// If has style already.
-		if ( preg_match( "/<.+ class=\".+{$classes}\".+style=\".+\"/", $block_content ) ) {
-			$block_content = preg_replace( "/(<.+ class=\".+{$classes}\".+style=\".+)(\".+)/", "$1 {$att_string}$2", $block_content );
+		// Check for classes.
+		if ( strpos( $block_content, 'class=' ) !== false ) {
+			// Add to classes.
+			$block_content = str_replace( "class=\"", "class=\"{$classes} ", $block_content );
 		} else {
-			$block_content = preg_replace( "/(<.+ class=\".+{$classes}\")(.+)/", "$1 style=\"{$att_string}\" $2", $block_content );
-		}
+			// Add classes.
+			$block_content = str_replace( ">", "class=\"{$classes}\">", $block_content );
+		}	
 
 		return $block_content;
 	}

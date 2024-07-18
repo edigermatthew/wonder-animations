@@ -1,96 +1,14 @@
-.wa-element:not(.in-view) {
-	opacity: 0;
-	visibility: hidden;
-}
+// Use the animate.css stylesheet.
+@use 'node_modules/animate.css/animate.min.css';
 
-.wa-element.in-view {
-	animation-play-state: running !important; /* !important to override javscript */
-}
+.animate__animated {
+	animation-play-state: paused;
 
-@keyframes fade-in-top-1 {
-	from {
-		transform: translateY(-100%);
+	&.in-view {
+		animation-play-state: running;
 	}
-	to {
-		transform: translateX(0);
-		opacity: 1;
-		visibility: visible;
-	}
-}
 
-@keyframes fade-in-top-2 {
-	from {
-		transform: translateY(-100%);
-	}
-	to {
-		transform: translateX(0);
-		opacity: 1;
-		visibility: visible;
-	}
-}
-
-@keyframes fade-in-right-1 {
-	from {
-		transform: translateX(100%);
-	}
-	to {
-		transform: translateX(0);
-		opacity: 1;
-		visibility: visible;
-	}
-}
-
-@keyframes fade-in-right-2 {
-	from {
-		transform: translateX(100%);
-	}
-	to {
-		transform: translateX(0);
-		opacity: 1;
-		visibility: visible;
-	}
-}
-
-@keyframes fade-in-bottom-1 {
-	from {
-		transform: translateY(100%);
-	}
-	to {
-		transform: translateX(0);
-		opacity: 1;
-		visibility: visible;
-	}
-}
-
-@keyframes fade-in-bottom-2 {
-	from {
-		transform: translateY(100%);
-	}
-	to {
-		transform: translateX(0);
-		opacity: 1;
-		visibility: visible;
-	}
-}
-
-@keyframes fade-in-left-1 {
-	from {
-		transform: translateX(-100%);
-	}
-	to {
-		transform: translateX(0);
-		opacity: 1;
-		visibility: visible;
-	}
-}
-
-@keyframes fade-in-left-2 {
-	from {
-		transform: translateX(-100%);
-	}
-	to {
-		transform: translateX(0);
-		opacity: 1;
-		visibility: visible;
+	&:not(.in-view) {
+		transform: none !important; // !important to override animation transforms.
 	}
 }

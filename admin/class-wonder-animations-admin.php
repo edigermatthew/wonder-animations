@@ -53,6 +53,8 @@ class Wonder_Animations_Admin {
 	 * Enqueue block editor assets.
 	 * 
 	 * Add the block editor assets to add animations to blocks.
+	 * 
+	 * @since 0.12.0 Using get_animate_css_names.
 	 */
 	public function enqueue_block_editor_assets() {
 		wp_enqueue_script(
@@ -63,7 +65,7 @@ class Wonder_Animations_Admin {
 		);
 		wp_add_inline_script(
 			$this->plugin_name . '-admin',
-			'const wonderAnimations = ' . json_encode( wonder_animations_get_animations() ), 'before'
+			'const wonderAnimations = ' . json_encode( wonder_animations_get_animate_css_names() ), 'before'
 		);
 	}	
 }

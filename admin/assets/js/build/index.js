@@ -91,7 +91,6 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Main index.js file.
  * 
- * @since 0.6.0 Removed toUpperCase().
  * @since 0.1.0
  */
 
@@ -141,19 +140,19 @@ function addAnimationAtts(settings, name) {
         type: 'string',
         default: ''
       },
-      animation_duration: {
-        type: 'integer',
-        default: 400
-      },
       animation_delay: {
-        type: 'integer',
+        type: 'string',
         default: ''
       },
-      animation_iteration_count: {
-        type: 'integer',
+      animation_duration: {
+        type: 'string',
         default: ''
       },
-      repeat_animation: {
+      animation_repeat: {
+        type: 'string',
+        default: ''
+      },
+      reset_view: {
         type: 'boolean',
         default: ''
       }
@@ -164,19 +163,21 @@ addFilter('blocks.registerBlockType', 'wonder-animations/add-animation-atts', ad
 
 /**
  * Add the controls for the attributes.
+ * 
+ * @since 0.13.0 Changing controls to fully use animate.css (animate.style) classes.
+ * @since 0.6.0  Removed toUpperCase().
  */
 const addAnimationAttributeControls = createHigherOrderComponent(BlockEdit => {
   return props => {
     const {
       attributes: {
         animation_name,
-        animation_duration,
         animation_delay,
-        animation_iteration_count,
-        repeat_animation
+        animation_duration,
+        animation_repeat,
+        reset_view
       },
-      setAttributes,
-      name
+      setAttributes
     } = props;
     const presetAnimations = wonderAnimations;
     const animationOptions = [{
@@ -184,9 +185,10 @@ const addAnimationAttributeControls = createHigherOrderComponent(BlockEdit => {
       value: ''
     }];
     for (let i = 0; i < presetAnimations.length; i++) {
+      console.log(presetAnimations[i]);
       animationOptions.push({
-        label: presetAnimations[i].label,
-        value: presetAnimations[i].slug + '-1'
+        label: presetAnimations[i],
+        value: presetAnimations[i]
       });
     }
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(BlockEdit, {
@@ -201,40 +203,78 @@ const addAnimationAttributeControls = createHigherOrderComponent(BlockEdit => {
       onChange: value => setAttributes({
         animation_name: value
       })
-    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(RangeControl, {
-      label: __('Duration', 'wonder-animations'),
-      help: __('in milliseconds.', 'wonder-animations'),
-      value: animation_duration,
-      min: 0,
-      max: 10000,
-      step: 100,
-      onChange: value => setAttributes({
-        animation_duration: value
-      })
-    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(RangeControl, {
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(SelectControl, {
       label: __('Delay', 'wonder-animations'),
       value: animation_delay,
-      min: 0,
-      max: 10000,
-      step: 100,
+      options: [{
+        label: '',
+        value: ''
+      }, {
+        label: __('2s', 'wonder-animations'),
+        value: 'delay-2s'
+      }, {
+        label: __('3s', 'wonder-animations'),
+        value: 'delay-3s'
+      }, {
+        label: __('4s', 'wonder-animations'),
+        value: 'delay-4s'
+      }, {
+        label: __('5s', 'wonder-animations'),
+        value: 'delay-5s'
+      }],
       onChange: value => setAttributes({
         animation_delay: value
       })
-    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(RangeControl, {
-      label: __('Iteration count', 'wonder-animations'),
-      value: animation_iteration_count,
-      min: 0,
-      max: 10,
-      step: 1,
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(SelectControl, {
+      label: __('Duration', 'wonder-animations'),
+      value: animation_duration,
+      options: [{
+        label: '',
+        value: ''
+      }, {
+        label: __('Slower', 'wonder-animations'),
+        value: 'slower'
+      }, {
+        label: __('Slow', 'wonder-animations'),
+        value: 'slow'
+      }, {
+        label: __('Fast', 'wonder-animations'),
+        value: 'fast'
+      }, {
+        label: __('Faster', 'wonder-animations'),
+        value: 'faster'
+      }],
       onChange: value => setAttributes({
-        animation_iteration_count: value
+        animation_duration: value
+      })
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(SelectControl, {
+      label: __('Repeat', 'wonder-animations'),
+      value: animation_repeat,
+      options: [{
+        label: '',
+        value: ''
+      }, {
+        label: __('1', 'wonder-animations'),
+        value: 'repeat-1'
+      }, {
+        label: __('2', 'wonder-animations'),
+        value: 'repeat-2'
+      }, {
+        label: __('3', 'wonder-animations'),
+        value: 'repeat-3'
+      }, {
+        label: __('Infinite', 'wonder-animations'),
+        value: 'infinite'
+      }],
+      onChange: value => setAttributes({
+        animation_repeat: value
       })
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(CheckboxControl, {
-      label: __('Repeat', 'wonder-animations'),
-      help: __('Should we repeat the animation?', 'wonder-animations'),
-      checked: repeat_animation,
+      label: __('Reset view', 'wonder-animations'),
+      help: __('Should we reset the view after leaving the viewport?', 'wonder-animations'),
+      checked: reset_view,
       onChange: value => setAttributes({
-        repeat_animation: value
+        reset_view: value
       })
     }))));
   };

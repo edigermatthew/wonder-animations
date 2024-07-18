@@ -2,7 +2,6 @@
 /**
  * Main index.js file.
  * 
- * @since 0.6.0 Removed toUpperCase().
  * @since 0.1.0
  */
 
@@ -35,19 +34,19 @@ function addAnimationAtts( settings, name ) {
 				type: 'string',
 				default: ''
 			},
-			animation_duration: {
-				type: 'integer',
-				default: 400
-			},
 			animation_delay: {
-				type: 'integer',
+				type: 'string',
 				default: ''
 			},
-			animation_iteration_count: {
-				type: 'integer',
+			animation_duration: {
+				type: 'string',
 				default: ''
 			},
-			repeat_animation: {
+			animation_repeat: {
+				type: 'string',
+				default: ''
+			},
+			reset_view: {
 				type: 'boolean',
 				default: ''
 			}
@@ -62,20 +61,23 @@ addFilter(
 
 /**
  * Add the controls for the attributes.
+ * 
+ * @since 0.13.0 Changing controls to fully use animate.css (animate.style) classes.
+ * @since 0.6.0  Removed toUpperCase().
  */
 const addAnimationAttributeControls = createHigherOrderComponent( ( BlockEdit ) => {
 	return ( props ) => {
 		const {
-			attributes: { animation_name, animation_duration, animation_delay, animation_iteration_count, repeat_animation },
+			attributes: { animation_name, animation_delay, animation_duration, animation_repeat, reset_view },
 			setAttributes,
-			name,
 		} = props;
 
 		const presetAnimations = wonderAnimations;
 		const animationOptions = [ { label: '', value: '' } ];
 		
 		for (let i = 0; i < presetAnimations.length; i++) {
-			animationOptions.push( { label: presetAnimations[i].label, value: presetAnimations[i].slug + '-1' } );
+			console.log( presetAnimations[i] );
+			animationOptions.push( { label: presetAnimations[i], value: presetAnimations[i] } );
 		}
 
 		return (
@@ -90,38 +92,49 @@ const addAnimationAttributeControls = createHigherOrderComponent( ( BlockEdit ) 
 							label={ __( 'Name', 'wonder-animations' ) }
 							value={ animation_name }
 							options={ animationOptions }
-							onChange={ (value) => setAttributes( { animation_name: value } ) }
+							onChange={ ( value ) => setAttributes( { animation_name: value } ) }
 						/>
-						<RangeControl
-							label={ __( 'Duration', 'wonder-animations' ) }
-							help={ __( 'in milliseconds.', 'wonder-animations' ) }
-							value={ animation_duration }
-							min={ 0 }
-							max={ 10000 }
-							step={ 100 }
-							onChange={ ( value ) => setAttributes( { animation_duration: value } ) }
-						/>
-						<RangeControl
+						<SelectControl
 							label={ __( 'Delay', 'wonder-animations' ) }
 							value={ animation_delay }
-							min={ 0 }
-							max={ 10000 }
-							step={ 100 }
+							options={[
+								{ label: '', value: '' },
+								{ label: __( '2s', 'wonder-animations' ), value: 'delay-2s' },
+								{ label: __( '3s', 'wonder-animations' ), value: 'delay-3s' },
+								{ label: __( '4s', 'wonder-animations' ), value: 'delay-4s' },
+								{ label: __( '5s', 'wonder-animations' ), value: 'delay-5s' }
+							]}
 							onChange={ ( value ) => setAttributes( { animation_delay: value } ) }
 						/>
-						<RangeControl
-							label={ __( 'Iteration count', 'wonder-animations' ) }
-							value={ animation_iteration_count }
-							min={ 0 }
-							max={ 10 }
-							step={ 1 }
-							onChange={ ( value ) => setAttributes( { animation_iteration_count: value } ) }
+						<SelectControl
+							label={ __( 'Duration', 'wonder-animations' ) }
+							value={ animation_duration }
+							options={[
+								{ label: '', value: '' },
+								{ label: __( 'Slower', 'wonder-animations' ), value: 'slower' },
+								{ label: __( 'Slow', 'wonder-animations' ), value: 'slow' },
+								{ label: __( 'Fast', 'wonder-animations' ), value: 'fast' },
+								{ label: __( 'Faster', 'wonder-animations' ), value: 'faster' }
+							]}
+							onChange={ ( value ) => setAttributes( { animation_duration: value } ) }
+						/>
+						<SelectControl
+							label={ __( 'Repeat', 'wonder-animations' ) }
+							value={ animation_repeat }
+							options={[
+								{ label: '', value: '' },
+								{ label: __( '1', 'wonder-animations' ), value: 'repeat-1' },
+								{ label: __( '2', 'wonder-animations' ), value: 'repeat-2' },
+								{ label: __( '3', 'wonder-animations' ), value: 'repeat-3' },
+								{ label: __( 'Infinite', 'wonder-animations' ), value: 'infinite' }
+							]}
+							onChange={ ( value ) => setAttributes( { animation_repeat: value } ) }
 						/>
 						<CheckboxControl
-							label={ __( 'Repeat', 'wonder-animations' ) }
-							help={ __( 'Should we repeat the animation?', 'wonder-animations' ) }
-							checked={ repeat_animation }
-							onChange={ ( value ) => setAttributes( { repeat_animation: value } ) }
+							label={ __( 'Reset view', 'wonder-animations' ) }
+							help={ __( 'Should we reset the view after leaving the viewport?', 'wonder-animations' ) }
+							checked={ reset_view }
+							onChange={ ( value ) => setAttributes( { reset_view: value } ) }
 						/>
 					</PanelBody>
 				</InspectorControls>
