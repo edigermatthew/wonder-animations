@@ -103,7 +103,7 @@ class Wonder_Animations {
 	private function fire_public_hooks() {
 		$plugin_public = new Wonder_Animations_Public( $this->plugin_name, $this->version );
 
-		add_action(  'wp_enqueue_scripts', array( $plugin_public, 'enqueue_scripts' ) );
-		add_filter( 'render_block', array( $plugin_public, 'render_block' ), 9999999999999, 3 );
+		add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_scripts' ), 0 );
+		add_filter( 'render_block', array( $plugin_public, 'render_block' ), 99, 3 );
 	}
 }

@@ -17,7 +17,7 @@ const { addFilter } = wp.hooks;
 const { createHigherOrderComponent } = wp.compose;
 const { Fragment } = wp.element;
 const { InspectorControls } = wp.blockEditor;
-const { PanelBody, SelectControl, RangeControl, RadioControl } = wp.components;
+const { PanelBody, SelectControl, RangeControl, CheckboxControl } = wp.components;
 
 /**
  * Add animation attributes.
@@ -37,7 +37,7 @@ function addAnimationAtts( settings, name ) {
 			},
 			animation_duration: {
 				type: 'integer',
-				default: ''
+				default: 400
 			},
 			animation_delay: {
 				type: 'integer',
@@ -47,9 +47,9 @@ function addAnimationAtts( settings, name ) {
 				type: 'integer',
 				default: ''
 			},
-			when_to_animate: {
-				type: 'string',
-				default: 'viewport'
+			repeat_animation: {
+				type: 'boolean',
+				default: ''
 			}
 		}),
 	});
@@ -66,7 +66,7 @@ addFilter(
 const addAnimationAttributeControls = createHigherOrderComponent( ( BlockEdit ) => {
 	return ( props ) => {
 		const {
-			attributes: { animation_name, animation_duration, animation_delay, animation_iteration_count, when_to_animate },
+			attributes: { animation_name, animation_duration, animation_delay, animation_iteration_count, repeat_animation },
 			setAttributes,
 			name,
 		} = props;
@@ -75,7 +75,7 @@ const addAnimationAttributeControls = createHigherOrderComponent( ( BlockEdit ) 
 		const animationOptions = [ { label: '', value: '' } ];
 		
 		for (let i = 0; i < presetAnimations.length; i++) {
-			animationOptions.push( { label: presetAnimations[i].label, value: presetAnimations[i].slug } );
+			animationOptions.push( { label: presetAnimations[i].label, value: presetAnimations[i].slug + '-1' } );
 		}
 
 		return (
@@ -94,18 +94,19 @@ const addAnimationAttributeControls = createHigherOrderComponent( ( BlockEdit ) 
 						/>
 						<RangeControl
 							label={ __( 'Duration', 'wonder-animations' ) }
+							help={ __( 'in milliseconds.', 'wonder-animations' ) }
 							value={ animation_duration }
 							min={ 0 }
-							max={ 10 }
-							step={ 0.1 }
+							max={ 10000 }
+							step={ 100 }
 							onChange={ ( value ) => setAttributes( { animation_duration: value } ) }
 						/>
 						<RangeControl
 							label={ __( 'Delay', 'wonder-animations' ) }
 							value={ animation_delay }
 							min={ 0 }
-							max={ 10 }
-							step={ 0.1 }
+							max={ 10000 }
+							step={ 100 }
 							onChange={ ( value ) => setAttributes( { animation_delay: value } ) }
 						/>
 						<RangeControl
@@ -116,14 +117,11 @@ const addAnimationAttributeControls = createHigherOrderComponent( ( BlockEdit ) 
 							step={ 1 }
 							onChange={ ( value ) => setAttributes( { animation_iteration_count: value } ) }
 						/>
-						<RadioControl
-							label={ __( 'When to animate', 'wonder-animations' ) }
-							selected={ when_to_animate }
-							options={ [
-								{ label: __( 'Viewport', 'wonder-animations' ), value: 'viewport' },
-								{ label: __( 'Immediately', 'wonder-animations' ), value: 'immediately' }
-							]}
-							onChange={ ( value ) => setAttributes( { when_to_animate: value } ) }
+						<CheckboxControl
+							label={ __( 'Repeat', 'wonder-animations' ) }
+							help={ __( 'Should we repeat the animation?', 'wonder-animations' ) }
+							checked={ repeat_animation }
+							onChange={ ( value ) => setAttributes( { repeat_animation: value } ) }
 						/>
 					</PanelBody>
 				</InspectorControls>

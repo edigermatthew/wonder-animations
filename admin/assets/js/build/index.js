@@ -122,7 +122,7 @@ const {
   PanelBody,
   SelectControl,
   RangeControl,
-  RadioControl
+  CheckboxControl
 } = wp.components;
 
 /**
@@ -143,7 +143,7 @@ function addAnimationAtts(settings, name) {
       },
       animation_duration: {
         type: 'integer',
-        default: ''
+        default: 400
       },
       animation_delay: {
         type: 'integer',
@@ -153,9 +153,9 @@ function addAnimationAtts(settings, name) {
         type: 'integer',
         default: ''
       },
-      when_to_animate: {
-        type: 'string',
-        default: 'viewport'
+      repeat_animation: {
+        type: 'boolean',
+        default: ''
       }
     })
   });
@@ -173,7 +173,7 @@ const addAnimationAttributeControls = createHigherOrderComponent(BlockEdit => {
         animation_duration,
         animation_delay,
         animation_iteration_count,
-        when_to_animate
+        repeat_animation
       },
       setAttributes,
       name
@@ -186,7 +186,7 @@ const addAnimationAttributeControls = createHigherOrderComponent(BlockEdit => {
     for (let i = 0; i < presetAnimations.length; i++) {
       animationOptions.push({
         label: presetAnimations[i].label,
-        value: presetAnimations[i].slug
+        value: presetAnimations[i].slug + '-1'
       });
     }
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(BlockEdit, {
@@ -203,10 +203,11 @@ const addAnimationAttributeControls = createHigherOrderComponent(BlockEdit => {
       })
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(RangeControl, {
       label: __('Duration', 'wonder-animations'),
+      help: __('in milliseconds.', 'wonder-animations'),
       value: animation_duration,
       min: 0,
-      max: 10,
-      step: 0.1,
+      max: 10000,
+      step: 100,
       onChange: value => setAttributes({
         animation_duration: value
       })
@@ -214,8 +215,8 @@ const addAnimationAttributeControls = createHigherOrderComponent(BlockEdit => {
       label: __('Delay', 'wonder-animations'),
       value: animation_delay,
       min: 0,
-      max: 10,
-      step: 0.1,
+      max: 10000,
+      step: 100,
       onChange: value => setAttributes({
         animation_delay: value
       })
@@ -228,18 +229,12 @@ const addAnimationAttributeControls = createHigherOrderComponent(BlockEdit => {
       onChange: value => setAttributes({
         animation_iteration_count: value
       })
-    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(RadioControl, {
-      label: __('When to animate', 'wonder-animations'),
-      selected: when_to_animate,
-      options: [{
-        label: __('Viewport', 'wonder-animations'),
-        value: 'viewport'
-      }, {
-        label: __('Immediately', 'wonder-animations'),
-        value: 'immediately'
-      }],
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(CheckboxControl, {
+      label: __('Repeat', 'wonder-animations'),
+      help: __('Should we repeat the animation?', 'wonder-animations'),
+      checked: repeat_animation,
       onChange: value => setAttributes({
-        when_to_animate: value
+        repeat_animation: value
       })
     }))));
   };
