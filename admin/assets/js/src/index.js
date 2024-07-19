@@ -76,7 +76,7 @@ const addAnimationAttributeControls = createHigherOrderComponent( ( BlockEdit ) 
 		const animationOptions = [ { label: '', value: '' } ];
 		
 		for (let i = 0; i < presetAnimations.length; i++) {
-			console.log( presetAnimations[i] );
+			//console.log( presetAnimations[i] );
 			animationOptions.push( { label: presetAnimations[i], value: presetAnimations[i] } );
 		}
 

@@ -4,7 +4,7 @@
  * Description:       Animations for your blocks. Utilizes CSS animations. Triggered when visible. Ability to reset view.
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Matthew Ediger
  * Author URI:        https:wonderjarcreative.com
  * License:           GPL-2.0-or-later
@@ -21,13 +21,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Define constants.
  * 
- * As this is a block filter plugin, there isn't a php class. Set requried paramaters
- * as constants.
+ * Set requried paramaters for further usage as constants.
  * 
  * @since 0.5.0 Dropped plugin from version constant.
  */
 define( 'WONDER_ANIMATIONS_PLUGIN_NAME', 'wonder-animations' );
-define( 'WONDER_ANIMATIONS_VERSION', '1.0.0' );
+define( 'WONDER_ANIMATIONS_VERSION', '1.0.1' );
 
 /**
  * Kickoff main class.
