@@ -1,19 +1,16 @@
 === Wonder Animations ===
-Contributors:      The WordPress Contributors
-Tags:              block
+Contributors:      edigermatthew
+Tags:              block, animations
 Tested up to:      6.1
-Stable tag:        0.1.0
+Stable tag:        1.0.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Example block scaffolded with Create Block tool.
+Animations for your blocks. Utilizes CSS animations. Triggered when visible. Ability to reset view.
 
 == Description ==
 
-This is the long description. No limit, and you can use Markdown (as well as in the following sections).
-
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+Enhance your blocks with CSS animations that trigger upon visibility. Features include a reset view option for replaying animations, ensuring a dynamic and engaging user experience.
 
 == Installation ==
 
@@ -45,8 +42,8 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
-= 0.1.0 =
-* Release
+= 1.0.0 =
+* Initial release
 
 == Arbitrary section ==
 
