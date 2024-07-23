@@ -68,6 +68,10 @@ class Wonder_Animations_Public {
 	 * 
 	 * Render our blocks with animations.
 	 * 
+	 * @since 1.13.0 Changed preg_replace again.
+	 * @since 1.1.3  Fixed preg_replaces.
+	 * @since 1.1.2  Not on gravityforms blocks.
+	 * @since 1.1.1  Attributes are prefixed by wa.
 	 * @since 0.12.0 Changed preg_replaces for str_replaces.
 	 * @since 0.9.0  Checking for boolean true for reset_view.
 	 * 
@@ -77,29 +81,26 @@ class Wonder_Animations_Public {
 	 * @return array The block content.
 	 */
 	public function render_block( $block_content, $block, $instance ) {
-		if ( ! isset( $block['attrs']['animation_name'] ) || empty( $block['attrs']['animation_name'] ) ) {
+		if ( strpos( $block['blockName'], 'gravityforms' ) !== false || ! isset( $block['attrs']['wa_animation_name'] ) || empty( $block['attrs']['wa_animation_name'] ) ) {
 			return $block_content;
 		}
 
 		// Set the element classes.
 		$classes = array(
 			'animate__animated',
-			'animate__' . $block['attrs']['animation_name'], // Name.
-			! empty( $block['attrs']['animation_delay'] ) ? 'animate__' . $block['attrs']['animation_delay'] : '', // Delay.
-			! empty( $block['attrs']['animation_duration'] ) ? 'animate__' . $block['attrs']['animation_duration'] : '', // Duration.
-			! empty( $block['attrs']['animation_repeat'] ) ? 'animate__' . $block['attrs']['animation_repeat'] : '', // Repeat.
-			! empty( $block['attrs']['reset_view'] ) && true === $block['attrs']['reset_view'] ? 'reset-view' : '' // Reset view.
+			'animate__' . $block['attrs']['wa_animation_name'], // Name.
+			! empty( $block['attrs']['wa_animation_delay'] ) ? 'animate__' . $block['attrs']['wa_animation_delay'] : '', // Delay.
+			! empty( $block['attrs']['wa_animation_duration'] ) ? 'animate__' . $block['attrs']['wa_animation_duration'] : '', // Duration.
+			! empty( $block['attrs']['wa_animation_repeat'] ) ? 'animate__' . $block['attrs']['wa_animation_repeat'] : '', // Repeat.
+			! empty( $block['attrs']['wa_reset_view'] ) && true === $block['attrs']['wa_reset_view'] ? 'reset-view' : '' // Reset view.
 		);
 		$classes = str_replace( "  ", " ", implode( ' ', $classes ) );
 
-		// Check for classes.
-		if ( strpos( $block_content, 'class=' ) !== false ) {
-			// Add to classes.
-			$block_content = str_replace( "class=\"", "class=\"{$classes} ", $block_content );
+		if ( preg_match( "/^<[a-z1-9]|[a-z1-9]+\sclass=\"[^\"]+\"\sstyle=\"[^\"]+\">/", $block_content ) === 1 ) {
+			$block_content = preg_replace( "/(^<[a-z1-9]|[a-z1-9]+\sclass=\"[^\"]+)(\"\sstyle=\"[^\"]+\">)|(\">)/", "$1 {$classes}$2$3", $block_content, 1 );
 		} else {
-			// Add classes.
-			$block_content = str_replace( ">", "class=\"{$classes}\">", $block_content );
-		}	
+			$block_content = preg_replace( "/(^<[a-z1-9]|[a-z1-9]+)(>)/", "$1 class=\"{$classes}\"$2", $block_content, 1 );
+		}
 
 		return $block_content;
 	}
