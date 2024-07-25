@@ -129,6 +129,7 @@ const {
  * 
  * Add the attributes we need.
  * 
+ * @since 1.4.0 Changed attribute names.
  * @since 1.1.2 Not gravityform blocks.
  * @since 1.1.1 Attributes prefixed by wa.
  * 
@@ -143,23 +144,23 @@ function addAnimationAtts(settings, name) {
   }
   return assign({}, settings, {
     attributes: merge(settings.attributes, {
-      wa_animation_name: {
+      waAnimationName: {
         type: 'string',
         default: ''
       },
-      wa_animation_delay: {
+      waAnimationDelay: {
         type: 'string',
         default: ''
       },
-      wa_animation_duration: {
+      waAnimationDuration: {
         type: 'string',
         default: ''
       },
-      wa_animation_repeat: {
+      waAnimationRepeat: {
         type: 'string',
         default: ''
       },
-      wa_reset_view: {
+      waResetView: {
         type: 'boolean',
         default: ''
       }
@@ -171,6 +172,7 @@ addFilter('blocks.registerBlockType', 'wonder-animations/add-animation-atts', ad
 /**
  * Add the controls for the attributes.
  * 
+ * @since 1.4.0  Using new attribute names.
  * @since 0.13.0 Changing controls to fully use animate.css (animate.style) classes.
  * @since 0.6.0  Removed toUpperCase().
  */
@@ -178,11 +180,11 @@ const addAnimationAttributeControls = createHigherOrderComponent(BlockEdit => {
   return props => {
     const {
       attributes: {
-        wa_animation_name,
-        wa_animation_delay,
-        wa_animation_duration,
-        wa_animation_repeat,
-        wa_reset_view
+        waAnimationName,
+        waAnimationDelay,
+        waAnimationDuration,
+        waAnimationRepeat,
+        waResetView
       },
       setAttributes,
       name
@@ -213,36 +215,48 @@ const addAnimationAttributeControls = createHigherOrderComponent(BlockEdit => {
       initialOpen: false
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(SelectControl, {
       label: __('Name', 'wonder-animations'),
-      value: wa_animation_name,
+      value: waAnimationName,
       options: animationOptions,
       onChange: value => setAttributes({
-        wa_animation_name: value
+        waAnimationName: value
       })
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(SelectControl, {
       label: __('Delay', 'wonder-animations'),
-      value: wa_animation_delay,
+      value: waAnimationDelay,
       options: [{
         label: '',
         value: ''
       }, {
+        label: __('0.5s', 'wonder-animations'),
+        value: 'delay-0_5s'
+      }, {
+        label: __('1s', 'wonder-animations'),
+        value: 'delay-1s'
+      }, {
+        label: __('1.5s', 'wonder-animations'),
+        value: 'delay-1_5s'
+      }, {
         label: __('2s', 'wonder-animations'),
         value: 'delay-2s'
+      }, {
+        label: __('2.5s', 'wonder-animations'),
+        value: 'delay-2_5s'
       }, {
         label: __('3s', 'wonder-animations'),
         value: 'delay-3s'
       }, {
+        label: __('3.5s', 'wonder-animations'),
+        value: 'delay-3_5s'
+      }, {
         label: __('4s', 'wonder-animations'),
         value: 'delay-4s'
-      }, {
-        label: __('5s', 'wonder-animations'),
-        value: 'delay-5s'
       }],
       onChange: value => setAttributes({
-        wa_animation_delay: value
+        waAnimationDelay: value
       })
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(SelectControl, {
       label: __('Duration', 'wonder-animations'),
-      value: wa_animation_duration,
+      value: waAnimationDuration,
       options: [{
         label: '',
         value: ''
@@ -260,11 +274,11 @@ const addAnimationAttributeControls = createHigherOrderComponent(BlockEdit => {
         value: 'faster'
       }],
       onChange: value => setAttributes({
-        wa_animation_duration: value
+        waAnimationDuration: value
       })
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(SelectControl, {
       label: __('Repeat', 'wonder-animations'),
-      value: wa_animation_repeat,
+      value: waAnimationRepeat,
       options: [{
         label: '',
         value: ''
@@ -282,14 +296,14 @@ const addAnimationAttributeControls = createHigherOrderComponent(BlockEdit => {
         value: 'infinite'
       }],
       onChange: value => setAttributes({
-        wa_animation_repeat: value
+        waAnimationRepeat: value
       })
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(CheckboxControl, {
       label: __('Reset view', 'wonder-animations'),
       help: __('Should we reset the view after leaving the viewport?', 'wonder-animations'),
-      checked: wa_reset_view,
+      checked: waResetView,
       onChange: value => setAttributes({
-        wa_reset_view: value
+        waResetView: value
       })
     }))));
   };

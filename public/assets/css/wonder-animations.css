@@ -1637,6 +1637,10 @@
   animation-name: slideOutUp;
 }
 
+:root {
+  --animate-delay: 0.5s;
+}
+
 .animate__animated {
   animation-play-state: paused;
 }
@@ -1645,4 +1649,44 @@
 }
 .animate__animated:not(.in-view) {
   transform: none !important;
+}
+
+.animate__animated.animate__delay-0_5s {
+  animation-delay: 0.5s;
+}
+
+.animate__animated.animate__delay-1s {
+  animation-delay: 1s;
+}
+
+.animate__animated.animate__delay-1_5s {
+  animation-delay: 1.5s;
+}
+
+.animate__animated.animate__delay-2s {
+  animation-delay: 2s;
+}
+
+.animate__animated.animate__delay-2_5s {
+  animation-delay: 2.5s;
+}
+
+.animate__animated.animate__delay-3s {
+  animation-delay: 3s;
+}
+
+.animate__animated.animate__delay-3_5s {
+  animation-delay: 3.5s;
+}
+
+.animate__animated.animate__delay-4s {
+  animation-delay: 4s;
+}
+
+.animate__animated.animate__delay-4_5s {
+  animation-delay: 4.5s;
+}
+
+.animate__animated.animate__delay-5s {
+  animation-delay: 5s;
 }/*# sourceMappingURL=wonder-animations.css.map */
