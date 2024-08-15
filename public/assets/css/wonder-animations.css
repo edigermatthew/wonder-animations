@@ -1650,6 +1650,10 @@
 .animate__animated:not(.in-view) {
   transform: none !important;
 }
+.animate__animated:not(.in-view)[class*=In] {
+  opacity: 0;
+  visibility: hidden;
+}
 
 .animate__animated.animate__delay-0_5s {
   animation-delay: 0.5s;

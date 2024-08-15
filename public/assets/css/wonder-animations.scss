@@ -2,7 +2,7 @@
 @use 'node_modules/animate.css/animate.min.css';
 
 // Import the sass functions.
-@import 'sass-functions';
+@import 'sass-functions.scss';
 
 :root {
 	--animate-delay: 0.5s;
@@ -16,7 +16,12 @@
 	}
 
 	&:not(.in-view) {
-		transform: none !important; // !important to override animation transforms.
+		transform: none !important;
+
+		&[class*="In"] {
+			opacity: 0;
+			visibility: hidden;
+		}
 	}
 }
 

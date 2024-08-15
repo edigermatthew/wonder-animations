@@ -2,7 +2,7 @@
 Contributors:      edigermatthew
 Tags:              block, animations
 Tested up to:      6.1
-Stable tag:        1.3.0
+Stable tag:        1.5.4
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
