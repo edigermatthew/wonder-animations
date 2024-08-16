@@ -227,26 +227,14 @@ const addAnimationAttributeControls = createHigherOrderComponent(BlockEdit => {
         label: '',
         value: ''
       }, {
-        label: __('0.5s', 'wonder-animations'),
-        value: 'delay-0_5s'
-      }, {
         label: __('1s', 'wonder-animations'),
         value: 'delay-1s'
-      }, {
-        label: __('1.5s', 'wonder-animations'),
-        value: 'delay-1_5s'
       }, {
         label: __('2s', 'wonder-animations'),
         value: 'delay-2s'
       }, {
-        label: __('2.5s', 'wonder-animations'),
-        value: 'delay-2_5s'
-      }, {
         label: __('3s', 'wonder-animations'),
         value: 'delay-3s'
-      }, {
-        label: __('3.5s', 'wonder-animations'),
-        value: 'delay-3_5s'
       }, {
         label: __('4s', 'wonder-animations'),
         value: 'delay-4s'
