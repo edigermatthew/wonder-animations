@@ -14,27 +14,19 @@
 	 * is in the viewport.
 	 * 
 	 * @see https://stackoverflow.com/questions/123999/how-can-i-tell-if-a-dom-element-is-visible-in-the-current-viewport?page=1&tab=scoredesc#tab-top
-	 * 
-	 * @since 1.6.0 Reworking with getBoundingClientRect().
+	 * @see https://stackoverflow.com/questions/52220491/jquery-detecting-if-element-is-in-viewport
 	 * 
 	 * @param {Object} element 
 	 * @returns True if in viewport; false otherwise.
 	 */
-	function isInViewport(el) {
-		// Special bonus for those using jQuery
-		if (typeof jQuery === "function" && el instanceof jQuery) {
-			console.log( el );
-			el = el[0];
-		}
-	
-		var rect = el.getBoundingClientRect();
-	
-		return (
-			rect.top >= 0 &&
-			rect.left >= 0 &&
-			rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /* or $(window).height() */
-			rect.right <= (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
-		);
+	$.fn.isInViewport = function() {
+		let elementTop = $(this).offset().top;
+		let elementBottom = elementTop + $(this).outerHeight();
+
+		let viewportTop = $(window).scrollTop();
+		let viewportBottom = viewportTop + window.innerHeight; // <-- here
+
+		return elementBottom > viewportTop && elementTop < viewportBottom;
 	};
 
 	/**
@@ -63,7 +55,7 @@
 					return;
 				}
 
-				if ( isInViewport( $this ) ) {
+				if ( $this.isInViewport() ) {
 					$this.addClass( 'in-view transitioning' );
 
 					setTimeout(function(){
