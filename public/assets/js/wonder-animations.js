@@ -13,16 +13,19 @@
 	 * jQuery utility function to check if an element
 	 * is in the viewport.
 	 * 
+	 * @see https://stackoverflow.com/questions/123999/how-can-i-tell-if-a-dom-element-is-visible-in-the-current-viewport?page=1&tab=scoredesc#tab-top
+	 * @see https://stackoverflow.com/questions/52220491/jquery-detecting-if-element-is-in-viewport
+	 * 
 	 * @param {Object} element 
 	 * @returns True if in viewport; false otherwise.
 	 */
 	$.fn.isInViewport = function() {
-		var elementTop = $(this).offset().top;
-		var elementBottom = elementTop + $(this).outerHeight();
-	
-		var viewportTop = $(window).scrollTop();
-		var viewportBottom = viewportTop + $(window).height();
-	
+		let elementTop = $(this).offset().top;
+		let elementBottom = elementTop + $(this).outerHeight();
+
+		let viewportTop = $(window).scrollTop();
+		let viewportBottom = viewportTop + window.innerHeight; // <-- here
+
 		return elementBottom > viewportTop && elementTop < viewportBottom;
 	};
 
@@ -31,6 +34,7 @@
 	 * 
 	 * The main javscript object for wonder animations.
 	 * 
+	 * @since 1.6.0  Reworking glich.
 	 * @since 0.12.0 Changing to use animate.css functionality.
 	 * @since 0.11.0 Adding a finish.
 	 * @since 0.10.0 Changing method of repeating animation.
@@ -45,23 +49,25 @@
 		checkForElemsInViewport: function(e){
 			wonderAnimations.$elems.each(function(){
 				let $this = $(this);
-				
+
+				if ( $this.hasClass( 'transitioning' ) ) {
+					console.log( 'stuck at transitioning' );
+					return;
+				}
+
 				if ( $this.isInViewport() ) {
-					$this.addClass( 'in-view' );
+					$this.addClass( 'in-view transitioning' );
 
-					// Check for finish.
-					if ( ! $this.hasClass( 'reset-view' ) ) {
-						wonderAnimations.finishAnimation( $this );
+					setTimeout(function(){
+						$this.removeClass( 'transitioning' );
+					}, 1000);
+				} else if ( $this.hasClass( 'in-view' ) ) {
+					if ( $this.hasClass( 'reset-view' ) ) {
+						// Repeat animation.
+						wonderAnimations.repeatAnimation( $this );
 					}
-				} else {
-					if ( $this.hasClass( 'in-view' ) ) {
-						$this.removeClass( 'in-view' );
 
-						if ( $this.hasClass( 'reset-view' ) ) {
-							// Repeat animation.
-							wonderAnimations.repeatAnimation( $this );
-						}
-					}
+					$this.removeClass( 'in-view' );
 				}
 			});
 		},

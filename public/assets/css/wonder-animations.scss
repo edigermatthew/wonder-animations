@@ -4,10 +4,6 @@
 // Import the sass functions.
 @import 'sass-functions.scss';
 
-:root {
-	--animate-delay: 0.5s;
-}
-
 .animate__animated {
 	animation-play-state: paused;
 
@@ -17,20 +13,10 @@
 
 	&:not(.in-view) {
 		transform: none !important;
-
-		&[class*="In"] {
-			opacity: 0;
-			visibility: hidden;
-		}
+		visibility: hidden;
 	}
-}
 
-$vals: 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5;
-
-@each $val in $vals {
-	$c: str-replace("#{$val}", '.', '_');
-
-	.animate__animated.animate__delay-#{$c}s {
-		animation-delay: #{$val}s;
+	&.in-view {
+		opacity: 1;
 	}
 }
