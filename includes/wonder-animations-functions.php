@@ -17,6 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Get the animate.css names.
  * 
  * @see   animate.style/#attention_seekers
+ * 
+ * @since 1.6.2  Fixed zoomOuts label.
  * @since 0.11.0
  * 
  * @return array The animate.css names.
@@ -107,7 +109,6 @@ function wonder_animations_get_animate_css_names() {
 		'zoomInLeft',
 		'zoomInRight',
 		'zoomInUp',
-		'Zooming exits',
 		'zoomOut',
 		'zoomOutDown',
 		'zoomOutLeft',
