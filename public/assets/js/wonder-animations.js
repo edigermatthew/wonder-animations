@@ -24,7 +24,7 @@
 		let elementBottom = elementTop + $(this).outerHeight();
 
 		let viewportTop = $(window).scrollTop();
-		let viewportBottom = viewportTop + window.innerHeight; // <-- here
+		let viewportBottom = viewportTop + window.innerHeight;
 
 		return elementBottom > viewportTop && elementTop < viewportBottom;
 	};
@@ -34,7 +34,8 @@
 	 * 
 	 * The main javscript object for wonder animations.
 	 * 
-	 * @since 1.6.0  Reworking glich.
+	 * @since 1.6.1  Changed object method.
+	 * @since 1.6.0  Reworking glich. Removing finish.
 	 * @since 0.12.0 Changing to use animate.css functionality.
 	 * @since 0.11.0 Adding a finish.
 	 * @since 0.10.0 Changing method of repeating animation.
@@ -56,11 +57,13 @@
 				}
 
 				if ( $this.isInViewport() ) {
+					let timeout = wonderAnimations.getAnimationDuration( $this );
+
 					$this.addClass( 'in-view transitioning' );
 
 					setTimeout(function(){
 						$this.removeClass( 'transitioning' );
-					}, 1000);
+					}, timeout );
 				} else if ( $this.hasClass( 'in-view' ) ) {
 					if ( $this.hasClass( 'reset-view' ) ) {
 						// Repeat animation.
@@ -90,14 +93,12 @@
 				element.css( 'animation-name', element.data( 'animation-name' ) );
 			}, 400);
 		},
-		finishAnimation: function( element ){
+		getAnimationDuration: function( element ){
 			const duration = element.css( 'animation-duration' ).replace( 's', '' ),
 				delay = element.css( 'animation-delay' ).replace( 's', '' ),
 				timeout = parseFloat( duration ) + parseFloat( delay ) * 1000 + 10;
 
-			setTimeout(function(){
-				element.addClass( 'animate__finished' );
-			}, timeout )
+			return timeout;
 		}
 	};
 	wonderAnimations.init();

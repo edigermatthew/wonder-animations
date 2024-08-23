@@ -4,7 +4,7 @@
  * Description:       Animations for your blocks. Utilizes CSS animations. Triggered when visible. Ability to reset view.
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           1.5.5
+ * Version:           1.6.1
  * Author:            Matthew Ediger
  * Author URI:        https:wonderjarcreative.com
  * License:           GPL-2.0-or-later
