@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name:       Wonder Animations
- * Description:       Animations for your blocks. Utilizes CSS animations. Triggered when visible. Ability to reset view.
+ * Description:       Add animations to your blocks. Powered by the animate.css library.
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           1.6.2
+ * Version:           1.6.3
  * Author:            Matthew Ediger
  * Author URI:        https:wonderjarcreative.com
  * License:           GPL-2.0-or-later
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 0.5.0 Dropped plugin from version constant.
  */
 define( 'WONDER_ANIMATIONS_PLUGIN_NAME', 'wonder-animations' );
-define( 'WONDER_ANIMATIONS_VERSION', '1.6.2' );
+define( 'WONDER_ANIMATIONS_VERSION', '1.6.3' );
 
 /**
  * Kickoff main class.

@@ -1,7 +1,7 @@
 {
 	"name": "wonder-animations",
-	"version": "1.6.2",
-	"description": "Animations for your blocks. Utilizes CSS animations. Triggered when visible. Ability to reset view.",
+	"version": "0.1.0",
+	"description": "Add animations to your blocks. Powered by the animate.css library.",
 	"author": "edigermatthew",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",

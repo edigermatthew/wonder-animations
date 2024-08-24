@@ -2,11 +2,11 @@
 Contributors:      edigermatthew
 Tags:              block, animations
 Tested up to:      6.1
-Stable tag:        1.6.2
+Stable tag:        1.6.3
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Animations for your blocks. Utilizes CSS animations. Triggered when visible. Ability to reset view.
+Add animations to your blocks. Powered by the animate.css library.
 
 == Description ==
 

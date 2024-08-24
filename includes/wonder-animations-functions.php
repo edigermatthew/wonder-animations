@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * 
  * @see   animate.style/#attention_seekers
  * 
- * @since 1.6.2  Fixed zoomOuts label.
+ * @since 1.6.3  Removing Zoomout label.
  * @since 0.11.0
  * 
  * @return array The animate.css names.

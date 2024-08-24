@@ -68,6 +68,7 @@ class Wonder_Animations_Public {
 	 * 
 	 * Render our blocks with animations.
 	 * 
+	 * @since 1.6.3  Checking for $block['blockName'] before strpos.
 	 * @since 1.5.0  Adding backwards compatibility for old attribute names.
 	 * @since 1.4.0  Using new attribute names.
 	 * @since 1.3.0  Change to preg_match.
@@ -84,7 +85,7 @@ class Wonder_Animations_Public {
 	 * @return array 	The block content.
 	 */
 	public function render_block( $block_content, $block, $instance ) {
-		if ( strpos( $block['blockName'], 'gravityforms' ) !== false || ! isset( $block['attrs']['waAnimationName'] ) || empty( $block['attrs']['waAnimationName'] ) ) {
+		if ( ! isset( $block['blockName'] ) || strpos( $block['blockName'], 'gravityforms' ) !== false || ! isset( $block['attrs']['waAnimationName'] ) || empty( $block['attrs']['waAnimationName'] ) ) {
 			return $block_content;
 		}
 
